@@ -1,6 +1,6 @@
 package models
 
-type AdminModel struct {
+type Admin struct {
 	Id uint `json:"id"`
 	Login string `json:"login"`
 	Password string `json:"password"`
