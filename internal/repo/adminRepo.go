@@ -1,7 +1,6 @@
 package repo
 
 import (
-	"errors"
 	"govno/internal/db"
 	"govno/internal/models"
 )

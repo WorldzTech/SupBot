@@ -4,12 +4,13 @@ import (
 	"database/sql"
 	"os"
 	"path/filepath"
+	_ "github.com/lib/pq"
 )
 
 var DB *sql.DB
 
 func InitDB() (*sql.DB, error) {
-	db, err := sql.Open("postgres", "host=79.174.88.248 user=worldz password=Red159753tie! port=18477 dbname=wcp sslmode=require")
+	db, err := sql.Open("postgres", "host=79.174.88.248 user=ozonprac password=OzonPrac2025! port=18477 dbname=oprac sslmode=require")
 	if err != nil {
 		return nil, err
 	}
