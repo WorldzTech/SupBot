@@ -1,8 +1,11 @@
 package routers
 
 import (
-	"github.com/gin-gonic/gin"
 	"govno/internal/handlers"
+	"govno/internal/repo"
+	"govno/internal/services"
+
+	"github.com/gin-gonic/gin"
 )
 
 func NewRouter() *gin.Engine {
@@ -12,9 +15,18 @@ func NewRouter() *gin.Engine {
 func GetAPIv1() *gin.Engine {
 	router := NewRouter()
 
-	adminHandlers := handlers.AdminHandlers{}
+	adminRepo := repo.AdminRepo{}
+	adminService := services.AdminService{Repo: adminRepo}
+	authHandler := handlers.NewAuthHandler(adminService, "your_strong_secret_key")
+
+	router.POST("/auth/login", authHandler.GenJWTToken)
+
 	adminGroup := router.Group("/admins")
-	adminGroup.GET("/list", adminHandlers.GetAdminList)
+	adminGroup.Use(authHandler.JWTAuthMiddleware())
+	{
+		adminHandlers := handlers.AdminHandlers{Service: adminService}
+		adminGroup.GET("/list", adminHandlers.GetAdminList)
+	}
 
 	return router
 }

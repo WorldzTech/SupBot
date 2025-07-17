@@ -6,12 +6,11 @@ import (
 	"log"
 )
 
-
 func main() {
 	router := routers.GetAPIv1()
 
 	_, err := db.InitDB()
-	
+
 	if err != nil {
 		log.Fatal(err)
 	}
